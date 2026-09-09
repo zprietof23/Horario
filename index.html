@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="eu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Ordutegia">
+    <meta name="author" content="Zunbeltz Prieto Fernández">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@100;300;400;500;700;900&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="Horario/icono.svg">
+    <title>3WAG1 - Klaseko ordutegia</title>
+    <style>
+        body {
+            zoom: 150%;
+            font-family: 'Ubuntu', 'Segoe UI', Roboto, 'Open Sans';
+            background-color: #242424;
+            color: #fff;
+            text-align: center;
+        }
+
+        header {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 80%;
+            margin: 0 auto;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        /* Base: Bordes blancos por defecto */
+        th, td {
+            border: 1px solid #fff;
+            padding: 8px;
+            text-align: center;
+            box-sizing: border-box; 
+        }
+
+        th {
+            background-color: #242424;
+        }
+        
+        /* Estilo para el resaltado: fondo blanco, texto negro y negrita */
+        td.highlight {
+            background-color: #fff;
+            color: #242424;
+            font-weight: bold;
+            /* MUGA ZURIA LEHENETSITA: Nabarmendutako gelaxkak integratzea */
+            border: 1px solid #fff; 
+        }
+        
+        th.highlight { 
+            background-color: #fff;
+            color: #242424;
+            /* BORDE SUPERIOR BLANCO, BORDE INFERIOR NEGRO */
+            border-top: 1px solid #fff; 
+            border-bottom: 1px solid #242424;
+            border-left: 1px solid #fff;
+            border-right: 1px solid #fff;
+        }
+
+        /* --- Estilos Condicionales para Bordes Negros (SEPARADORES) --- */
+
+        /* Goian, behean, eskuinean, ezkerrean beltza */
+        td.highlight.highlight-top { border-top: 1px solid #242424; }
+        td.highlight.highlight-bottom { border-bottom: 1px solid #242424; }
+        td.highlight.highlight-right { border-right: 1px solid #242424; }
+        td.highlight.highlight-left { border-left: 1px solid #242424; }
+
+        /* TH nabarmenduak (Egunak): Goian y behean muga beltza - REGRESA LA LÍNEA DE ARRIBA A BLANCO */
+        /* Eliminamos la anterior regla repetida y usamos solo la nueva de 'th.highlight' */
+
+        #clock {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* Centrar la lista de asignaturas y sus elementos */
+        ul {
+            margin-top: 20px;
+            display: inline-block;
+            text-align: center; 
+            list-style: none; 
+            padding: 0;
+        }
+        
+        ul li {
+            list-style: none; 
+            text-align: center;
+        }
+    </style>
+</head> 
+<body>
+    <header>
+        <h1>3WAG1 - Klaseko ordutegia</h1>
+        <div id="clock"></div>
+    </header>
+
+    <table>
+        <thead>
+            <tr>
+                <th></th>
+                <th id="mon">Astelehena</th>
+                <th id="tue">Asteartea</th>
+                <th id="wed">Asteazkena</th>
+                <th id="thu">Osteguna</th>
+                <th id="fri">Ostirala</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>8:00-9:00</td>
+                <td>6. DIGI</td>
+                <td rowspan="2">7. EIP-1</td>
+                <td>1. LEN</td>
+                <td>3. ENT</td>
+                <td rowspan="2">4. BAD</td>
+            </tr>
+            <tr>
+                <td>9:00-10:00</td>
+                <td>3. ENT</td>
+                <td rowspan="2">2. PROG</td>
+                <td rowspan="2">2. PROG</td>
+            </tr>
+            <tr>
+                <td>10:00-11:00</td>
+                <td>2. PROG</td>
+                <td>5. SOSTE</td>
+                <td>2. PROG</td>
+            </tr>
+            <tr>
+                <td>11:00-11:30</td>
+                <td colspan="5">Atsedenaldia</td>
+            </tr>
+            <tr>
+                <td>11:30-12:30</td>
+                <td>2. PROG</td>
+                <td rowspan="2">4. BAD</td>
+                <td>6. DIGI</td>
+                <td>4. BAD</td>
+                <td rowspan="2">1. LEN</td>
+            </tr>
+            <tr>
+                <td>12:30-13:30</td>
+                <td>1. LEN</td>
+                <td rowspan="2">8. INGL</td>
+                <td rowspan="2">7. EIP-1</td>
+            </tr>
+            <tr>
+                <td>13:30-14:30</td>
+                <td>4. BAD</td>
+                <td>2. PROG</td>
+                <td>3. ENT</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul>
+        <li>1. Markatzeko lengoaiak eta informazioa kudeatzeko sistemak</li>
+        <li>2. Programazioa</li>
+        <li>3. Garapen inguruneak</li>
+        <li>4. Datu baseak</li>
+        <li>5. Produktu-sistemari aplikatutako jasangarritasuna</li>
+        <li>6. Produktu-sektoreei aplikatutako digitalizazioa</li>
+        <li>7. Enplegagarritasunerako ibilbide pertsonala</li>
+        <li>8. Ingles profesionala</li>
+    </ul>
+    <script>
+        // RELOJ (Sin cambios)
+        function updateClock() {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // --- FUNCION PRINCIPAL DE RESALTADO ---
+        function highlightSchedule() {
+            const now = new Date();
+            const day = now.getDay(); // 0 = Domingo, 1 = Lunes...
+            const hour = now.getHours();
+            const minute = now.getMinutes();
+            const nowMin = hour * 60 + minute;
+            const rows = document.querySelectorAll('tbody tr');
+            
+            // 1. Dagoeneko nabarmenduta dauden klase eta muga guztiak kendu
+            document.querySelectorAll('td, th').forEach(el => {
+                el.classList.remove('highlight', 'highlight-top', 'highlight-bottom', 'highlight-right');
+            });
+
+            // 2. Eguneko TH (goiko zutabea) nabarmendu
+            const daysMap = {1:'mon', 2:'tue', 3:'wed', 4:'thu', 5:'fri'};
+            if(daysMap[day]) {
+                document.getElementById(daysMap[day]).classList.add('highlight');
+            }
+
+            // Denbora-tarte guztiak
+            const timeSlots = [
+                // [startH, startM, endH, endM, rowIndex, isBreak]
+                [8, 0, 9, 0, 0, false],
+                [9, 0, 10, 0, 1, false],
+                [10, 0, 11, 0, 2, false],
+                [11, 0, 11, 30, 3, true], // Atsedenaldia
+                [11, 30, 12, 30, 4, false],
+                [12, 30, 13, 30, 5, false],
+                [13, 30, 14, 30, 6, false]
+            ];
+
+            if (day >= 1 && day <= 5) {
+                
+                timeSlots.forEach(([startH, startM, endH, endM, rowIndex, isBreak]) => {
+                    const startMin = startH * 60 + startM;
+                    const endMin = endH * 60 + endM;
+
+                    // Denbora tartearen barruan gauden ala ez
+                    if (nowMin >= startMin && nowMin < endMin) {
+                        const row = rows[rowIndex];
+
+                        if (row) {
+                            const timeCell = row.children[0]; // Orduaren gelaxka
+                            timeCell.classList.add('highlight');
+                            // Orduaren gelaxkak beti du muga beltza eskuinean (klaseetatik bereizteko)
+                            timeCell.classList.add('highlight-right');
+
+                            let classCell = null;
+                            if (isBreak) { // Atsedenaldia
+                                classCell = row.children[1]; // Colspan="5" duena
+                            } else {
+                                classCell = row.children[day]; // Klase normala
+                            }
+                            
+                            if (classCell) {
+                                classCell.classList.add('highlight');
+                            }
+                            
+                            /* --- MUGA BELTZA APLIKATZEKO LOGIKA (Goian eta Behean) --- */
+                            
+                            // Muga beltza GOIAN jartzeko logikak:
+                            // 1. Lehen ordua bada (8:00)
+                            // 2. Atsedenaldiaren ondoren badator (11:30)
+                            // 3. Aurreko orduko klasea desberdina bada
+                            const prevRowIndex = rowIndex - 1;
+                            
+                            if (rowIndex === 0 || rowIndex === 4) { // 8:00-09:00 edo 11:30-12:30
+                                timeCell.classList.add('highlight-top');
+                                if (classCell) classCell.classList.add('highlight-top');
+                            } else if (prevRowIndex >= 0 && !isBreak && !timeSlots[prevRowIndex][5]) {
+                                // Aurreko gelaxka bilatu (egun berean)
+                                const prevRow = rows[prevRowIndex];
+                                const prevClassCell = prevRow.children[day];
+
+                                // Klasearen izena desberdina bada, muga goian jarri
+                                if (classCell && prevClassCell && classCell.textContent !== prevClassCell.textContent) {
+                                    timeCell.classList.add('highlight-top');
+                                    classCell.classList.add('highlight-top');
+                                }
+                            }
+                            
+                            // Muga beltza BEHEAN jartzeko logika:
+                            // 1. Azken ordua bada (13:30)
+                            // 2. Atsedenaldiaren aurretik badago (10:00)
+                            // 3. Hurrengo orduko klasea desberdina bada
+                            const nextRowIndex = rowIndex + 1;
+                            
+                            if (rowIndex === 6 || rowIndex === 2) { // 13:30-14:30 edo 10:00-11:00 (Atsedenaldiaren aurretik)
+                                timeCell.classList.add('highlight-bottom');
+                                if (classCell) classCell.classList.add('highlight-bottom');
+                            } else if (nextRowIndex < rows.length && !isBreak && !timeSlots[nextRowIndex][5]) {
+                                // Hurrengo gelaxka bilatu (egun berean)
+                                const nextRow = rows[nextRowIndex];
+                                const nextClassCell = nextRow.children[day];
+
+                                // Klasearen izena desberdina bada, muga behean jarri
+                                if (classCell && nextClassCell && classCell.textContent !== nextClassCell.textContent) {
+                                    timeCell.classList.add('highlight-bottom');
+                                    classCell.classList.add('highlight-bottom');
+                                }
+                            }
+                            
+                            // Atsedenaldiaren kasu berezia (beti du muga goian eta behean, eta eskuinean)
+                            if (isBreak) {
+                                timeCell.classList.add('highlight-top', 'highlight-bottom');
+                                if (classCell) classCell.classList.add('highlight-top', 'highlight-bottom', 'highlight-right');
+                            }
+                        }
+                    }
+                });
+            }
+        }
+
+        setInterval(highlightSchedule, 1000); // Actualizar cada segundo
+        highlightSchedule();
+    </script>
+</body>
+
+</html>
+
+
