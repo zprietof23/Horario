@@ -16,24 +16,20 @@
             color: #fff;
             text-align: center;
         }
-
         a{
             color: teal;
             font-style: normal;
             text-decoration: none;
         }
-
         header {
             margin-bottom: 20px;
         }
-
         table {
             width: 80%;
             margin: 0 auto;
             border-collapse: collapse;
             margin-bottom: 20px;
         }
-
         /* Base: Bordes blancos por defecto */
         th, td {
             border: 1px solid #fff;
@@ -41,7 +37,6 @@
             text-align: center;
             box-sizing: border-box; 
         }
-
         th {
             background-color: #242424;
         }
@@ -64,21 +59,16 @@
             border-left: 1px solid #fff;
             border-right: 1px solid #fff;
         }
-
         /* --- Estilos Condicionales para Bordes Negros (SEPARADORES) --- */
-
         /* Goian, behean, eskuinean, ezkerrean beltza */
         td.highlight.highlight-top { border-top: 1px solid #242424; }
         td.highlight.highlight-bottom { border-bottom: 1px solid #242424; }
         td.highlight.highlight-right { border-right: 1px solid #242424; }
         td.highlight.highlight-left { border-left: 1px solid #242424; }
-
-        /* TH nabarmenduak (Egunak): Goian y behean muga beltza - REGRESA LA LÍNEA DE ARRIBA A BLANCO */
-        /* Eliminamos la anterior regla repetida y usamos solo la nueva de 'th.highlight' */
-
+        
         #clock {
             font-size: 2em;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             text-align: center;
         }
         
@@ -95,14 +85,43 @@
             list-style: none; 
             text-align: center;
         }
+
+        /* --- Estilos Botón Convalidados --- */
+        .btn-convalidados {
+            background-color: #242424;
+            color: #fff;
+            border: 1px solid #fff;
+            padding: 8px 16px;
+            font-family: 'Ubuntu', 'Segoe UI', Roboto, sans-serif;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-bottom: 15px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-convalidados:hover {
+            background-color: #fff;
+            color: #242424;
+        }
+
+        .btn-convalidados.active {
+            background-color: teal;
+            color: #fff;
+            border-color: teal;
+        }
+
+        /* Ocultar texto de asignaturas convalidadas conservando estructura de tabla */
+        td.convalidado-blank {
+            color: transparent !important;
+        }
     </style>
-</head> 
+</head>
 <body>
     <header>
         <h1>3WAG1 - Klaseko ordutegia</h1>
         <div id="clock"></div>
+        <button id="btnConvalidados" class="btn-convalidados" onclick="toggleConvalidados()">Convalidados Eder Aimar Aitor</button>
     </header>
-
     <table>
         <thead>
             <tr>
@@ -118,7 +137,7 @@
             <tr>
                 <td>8:00-9:00</td>
                 <td>6. DIGI</td>
-                <td rowspan="2">7. EIP-1</td>
+                <td rowspan="2" class="convalidado">7. EIP-1</td>
                 <td>1. LEN</td>
                 <td>3. ENT</td>
                 <td rowspan="2">4. BAD</td>
@@ -132,7 +151,7 @@
             <tr>
                 <td>10:00-11:00</td>
                 <td>2. PROG</td>
-                <td>5. SOSTE</td>
+                <td class="convalidado">5. SOSTE</td>
                 <td>2. PROG</td>
             </tr>
             <tr>
@@ -151,7 +170,7 @@
                 <td>12:30-13:30</td>
                 <td>1. LEN</td>
                 <td rowspan="2">8. INGL</td>
-                <td rowspan="2">7. EIP-1</td>
+                <td rowspan="2" class="convalidado">7. EIP-1</td>
             </tr>
             <tr>
                 <td>13:30-14:30</td>
@@ -161,7 +180,6 @@
             </tr>
         </tbody>
     </table>
-
     <ul>
         <li>1. Markatzeko lengoaiak eta informazioa kudeatzeko sistemak: <u><i>Maitane Oviedo Satrustegi</i></u></li>
         <li>2. Programazioa: <u><i>Joseba Andoni Sanz Mayal</i></u></li>
@@ -169,8 +187,8 @@
         <li>4. Datu baseak: <u><i>Garikoitz Barquin Esnaola</i></u></li>
         <li>5. Produktu-sistemari aplikatutako jasangarritasuna: <u><i>Sara Hawari Berriozabalgoitia</i></u></li>
         <li>6. Produktu-sektoreei aplikatutako digitalizazioa: <u><i>Urtzi Goikoetxea Villarmarzo</i></u></li>
-        <li>7. Enplegagarritasunerako ibilbide pertsonala:<i><u> Monica Ortiz Castillo</i></u></li>
-        <li>8. Ingles profesionala: <u><i>Maria Mar Lopez Perez</i></li></u>
+        <li>7. Enplegagarritasunerako ibilbide pertsonala: <u><i>Monica Ortiz Castillo</i></u></li>
+        <li>8. Ingles profesionala: <u><i>Maria Mar Lopez Perez</i></u></li>
     </ul>
     <p><a href="mailto:b7orac1xd@mozmail.com" target="_blank">Sugerencias</a></p>
     <script>
@@ -184,6 +202,16 @@
         }
         setInterval(updateClock, 1000);
         updateClock();
+
+        // FUNCION BOTON CONVALIDADOS
+        function toggleConvalidados() {
+            const btn = document.getElementById('btnConvalidados');
+            btn.classList.toggle('active');
+            const cells = document.querySelectorAll('.convalidado');
+            cells.forEach(cell => {
+                cell.classList.toggle('convalidado-blank');
+            });
+        }
 
         // Función auxiliar que mapea la tabla teniendo en cuenta rowspan y colspan
         function getCellByColumn(rowIndex, colIndex) {
@@ -247,7 +275,6 @@
             ];
 
             if (day >= 1 && day <= 5) {
-                
                 timeSlots.forEach(([startH, startM, endH, endM, rowIndex, isBreak]) => {
                     const startMin = startH * 60 + startM;
                     const endMin = endH * 60 + endM;
@@ -255,7 +282,6 @@
                     // Denbora tartearen barruan gauden ala ez
                     if (nowMin >= startMin && nowMin < endMin) {
                         const row = rows[rowIndex];
-
                         if (row) {
                             const timeCell = row.children[0]; // Celda de la hora
                             timeCell.classList.add('highlight');
@@ -281,7 +307,6 @@
                                 if (classCell) classCell.classList.add('highlight-top');
                             } else if (prevRowIndex >= 0 && !isBreak && !timeSlots[prevRowIndex][5]) {
                                 const prevClassCell = getCellByColumn(prevRowIndex, day);
-
                                 if (classCell && prevClassCell && classCell.textContent !== prevClassCell.textContent) {
                                     timeCell.classList.add('highlight-top');
                                     classCell.classList.add('highlight-top');
@@ -295,7 +320,6 @@
                                 if (classCell) classCell.classList.add('highlight-bottom');
                             } else if (nextRowIndex < rows.length && !isBreak && !timeSlots[nextRowIndex][5]) {
                                 const nextClassCell = getCellByColumn(nextRowIndex, day);
-
                                 if (classCell && nextClassCell && classCell.textContent !== nextClassCell.textContent) {
                                     timeCell.classList.add('highlight-bottom');
                                     classCell.classList.add('highlight-bottom');
@@ -316,5 +340,4 @@
         highlightSchedule();
     </script>
 </body>
-
 </html>
