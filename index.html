@@ -97,6 +97,7 @@
             cursor: pointer;
             margin-bottom: 15px;
             transition: all 0.2s ease;
+            border-radius: 50px;
         }
 
         .btn-convalidados:hover {
@@ -120,7 +121,6 @@
     <header>
         <h1>3WAG1 - Klaseko ordutegia</h1>
         <div id="clock"></div>
-        <button id="btnConvalidados" class="btn-convalidados" onclick="toggleConvalidados()">Convalidados Eder Aimar Aitor</button>
     </header>
     <table>
         <thead>
@@ -181,6 +181,7 @@
         </tbody>
     </table>
     <ul>
+        <li><button id="btnConvalidados" class="btn-convalidados" onclick="toggleConvalidados()">Convalidados</button></li>
         <li>1. Markatzeko lengoaiak eta informazioa kudeatzeko sistemak: <u><i>Maitane Oviedo Satrustegi</i></u></li>
         <li>2. Programazioa: <u><i>Joseba Andoni Sanz Mayal</i></u></li>
         <li>3. Garapen inguruneak: <u><i>Egoitz Gallaga Perez</i></u></li>
@@ -190,7 +191,6 @@
         <li>7. Enplegagarritasunerako ibilbide pertsonala: <u><i>Monica Ortiz Castillo</i></u></li>
         <li>8. Ingles profesionala: <u><i>Maria Mar Lopez Perez</i></u></li>
     </ul>
-    <p><a href="mailto:b7orac1xd@mozmail.com" target="_blank">Sugerencias</a></p>
     <script>
         // RELOJ
         function updateClock() {
