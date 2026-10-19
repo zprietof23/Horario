@@ -252,7 +252,13 @@
                 const minutes = now.getMinutes().toString().padStart(2, '0');
                 const seconds = now.getSeconds().toString().padStart(2, '0');
                 document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-                document.title = `${hours}:${minutes}:${seconds} - 3WAG1 ordutegia`;
+                if (document.hidden) {
+                    // Muestra la hora si estás en otra pestaña
+                    document.title = `${hours}:${minutes}:${seconds} - 3WAG1 ordutegia`;
+                } else {
+                    // Quita la hora cuando abres / enfocas esta pestaña
+                    document.title = "3WAG1 - Klaseko ordutegia";
+    }
             }
             setInterval(updateClock, 1000);
             updateClock();
