@@ -69,6 +69,19 @@
                 color: #fff;
                 text-align: center;
             }
+            #snow {
+                position: fixed;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 10;
+            }
+            @media (prefers-reduced-motion: reduce) {
+                #snow {
+                    display: none;
+                }
+            }
             a{
                 color: teal;
                 font-style: normal;
@@ -171,6 +184,7 @@
         </style>
     </head>
     <body>
+        <canvas id="snow" aria-hidden="true"></canvas>
         <header>
             <h1>3WAG1 - Klaseko ordutegia</h1>
             <div id="clock"></div>
@@ -245,6 +259,107 @@
             <li>8. Ingles profesionala: <u><i>Maria Mar Lopez Perez</i></u></li>
         </ul>
         <script>
+            // NIEVE
+            const snowCanvas = document.getElementById('snow');
+            const snowContext = snowCanvas.getContext('2d');
+            const snowflakes = [];
+            const snowCover = [];
+            const snowSegmentWidth = 6;
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            let lastSnowFrame = 0;
+
+            function resizeSnow() {
+                const previousSnowCover = snowCover.slice();
+                const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+                snowCanvas.width = window.innerWidth * pixelRatio;
+                snowCanvas.height = window.innerHeight * pixelRatio;
+                snowContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+                const count = Math.min(120, Math.max(30, Math.floor(
+                    window.innerWidth * window.innerHeight / 9000
+                )));
+                snowflakes.length = 0;
+                for (let i = 0; i < count; i++) {
+                    snowflakes.push(createSnowflake(true));
+                }
+                snowCover.length = Math.ceil(window.innerWidth / snowSegmentWidth);
+                snowCover.forEach((_, index) => {
+                    const previousIndex = Math.floor(
+                        (index + 0.5) * previousSnowCover.length / snowCover.length
+                    );
+                    snowCover[index] = previousSnowCover[previousIndex] || 0;
+                });
+            }
+
+            function createSnowflake(randomHeight = false) {
+                return {
+                    x: Math.random() * window.innerWidth,
+                    y: randomHeight ? Math.random() * window.innerHeight : -5,
+                    radius: Math.random() * 2 + 1,
+                    speed: Math.random() * 1.2 + 0.5,
+                    drift: Math.random() * 0.8 - 0.4,
+                    opacity: Math.random() * 0.6 + 0.3
+                };
+            }
+
+            function drawSnow(timestamp) {
+                snowContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                const elapsed = lastSnowFrame ? (timestamp - lastSnowFrame) / 1000 : 0;
+                lastSnowFrame = timestamp;
+                snowCover.forEach((height, index) => {
+                    snowCover[index] = Math.max(0, height - elapsed * 0.035);
+                });
+
+                snowflakes.forEach(flake => {
+                    flake.y += flake.speed;
+                    flake.x += flake.drift;
+                    const groundIndex = Math.max(0, Math.min(
+                        snowCover.length - 1,
+                        Math.floor(flake.x / snowSegmentWidth)
+                    ));
+                    if (flake.y + flake.radius >= window.innerHeight - snowCover[groundIndex]) {
+                        [groundIndex - 1, groundIndex, groundIndex + 1].forEach((index, offset) => {
+                            if (index >= 0 && index < snowCover.length) {
+                                snowCover[index] = Math.min(
+                                    22,
+                                    snowCover[index] + (offset === 1 ? 0.9 : 0.45)
+                                );
+                            }
+                        });
+                        Object.assign(flake, createSnowflake());
+                    }
+                    if (flake.x < -flake.radius) flake.x = window.innerWidth + flake.radius;
+                    if (flake.x > window.innerWidth + flake.radius) flake.x = -flake.radius;
+
+                    snowContext.beginPath();
+                    snowContext.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+                    snowContext.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+                    snowContext.fill();
+                });
+
+                snowContext.beginPath();
+                snowContext.moveTo(0, window.innerHeight - (snowCover[0] || 0));
+                snowCover.forEach((height, index) => {
+                    snowContext.lineTo(
+                        Math.min(window.innerWidth, (index + 0.5) * snowSegmentWidth),
+                        window.innerHeight - height
+                    );
+                });
+                snowContext.lineTo(window.innerWidth, window.innerHeight);
+                snowContext.lineTo(0, window.innerHeight);
+                snowContext.closePath();
+                snowContext.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                snowContext.fill();
+
+                requestAnimationFrame(drawSnow);
+            }
+
+            if (!reduceMotion.matches) {
+                resizeSnow();
+                window.addEventListener('resize', resizeSnow);
+                drawSnow();
+            }
+
             // RELOJ
             function updateClock() {
                 const now = new Date();
