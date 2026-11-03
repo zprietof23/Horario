@@ -283,12 +283,12 @@
                     snowflakes.push(createSnowflake(true));
                 }
                 snowCover.length = Math.ceil(window.innerWidth / snowSegmentWidth);
-                snowCover.forEach((_, index) => {
+                for (let index = 0; index < snowCover.length; index++) {
                     const previousIndex = Math.floor(
                         (index + 0.5) * previousSnowCover.length / snowCover.length
                     );
                     snowCover[index] = previousSnowCover[previousIndex] || 0;
-                });
+                }
             }
 
             function createSnowflake(randomHeight = false) {
@@ -307,7 +307,7 @@
                 const elapsed = lastSnowFrame ? (timestamp - lastSnowFrame) / 1000 : 0;
                 lastSnowFrame = timestamp;
                 snowCover.forEach((height, index) => {
-                    snowCover[index] = Math.max(0, height - elapsed * 0.035);
+                    snowCover[index] = Math.max(0, height - elapsed * 0.008);
                 });
 
                 snowflakes.forEach(flake => {
