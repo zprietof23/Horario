@@ -177,6 +177,15 @@
                 border-color: teal;
             }
 
+            /* Contador de cuenta atrás hasta el 23 de diciembre */
+            #contador {
+                font-size: 0.72rem;
+                font-weight: 300;
+                color: rgba(255, 255, 255, 0.8);
+                margin-top: -8px;
+                letter-spacing: 0.02em;
+            }
+
             /* Ocultar texto de asignaturas convalidadas conservando estructura de tabla */
             td.convalidado-blank {
                 color: transparent !important;
@@ -248,7 +257,9 @@
             </tbody>
         </table>
         <ul>
-            <li><button id="btnConvalidados" class="btn-convalidados" onclick="toggleConvalidados()">Convalidados</button></li>
+            <li><button id="btnConvalidados" class="btn-convalidados" onclick="toggleConvalidados()">Convalidados</button>
+                <div id="contador">Faltan ... egun</div>
+            </li>
             <li>1. Markatzeko lengoaiak eta informazioa kudeatzeko sistemak: <u><i>Maitane Oviedo Satrustegi</i></u></li>
             <li>2. Programazioa: <u><i>Joseba Andoni Sanz Mayal</i></u></li>
             <li>3. Garapen inguruneak: <u><i>Egoitz Gallaga Perez</i></u></li>
@@ -513,6 +524,45 @@
 
             setInterval(highlightSchedule, 1000); // Actualizar cada segundo
             highlightSchedule();
+
+            // CONTADOR CUENTA ATRÁS HASTA EL 23 DE DICIEMBRE
+            (function () {
+                const contador = document.getElementById('contador');
+                if (!contador) return;
+
+                const dosDigitos = (num) => num.toString().padStart(2, '0');
+
+                function actualizarContador() {
+                    const ahora = new Date();
+                    const anio = ahora.getFullYear();
+                    const inicio = new Date(anio, 11, 23, 0, 0, 0);
+                    const fin = new Date(anio, 11, 23, 23, 59, 59);
+
+                    // Durante el día 23 se muestra el saludo
+                    if (ahora >= inicio && ahora <= fin) {
+                        contador.textContent = '🎄 Gabonak!';
+                        return;
+                    }
+
+                    // Si ya pasó el 23, cuenta hasta el del año siguiente
+                    const objetivo = ahora < inicio
+                        ? inicio
+                        : new Date(anio + 1, 11, 23, 0, 0, 0);
+
+                    const faltan = Math.max(0, objetivo.getTime() - ahora.getTime());
+                    const totalSegundos = Math.floor(faltan / 1000);
+                    const dias = Math.floor(totalSegundos / 86400);
+                    const horas = Math.floor((totalSegundos % 86400) / 3600);
+                    const minutos = Math.floor((totalSegundos % 3600) / 60);
+                    const segundos = totalSegundos % 60;
+
+                    contador.textContent = 'Faltan ' + dias + ' egun · '
+                        + dosDigitos(horas) + ':' + dosDigitos(minutos) + ':' + dosDigitos(segundos);
+                }
+
+                actualizarContador();
+                setInterval(actualizarContador, 1000);
+            })();
         </script>
     </body>
 </html>
