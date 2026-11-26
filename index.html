@@ -1,343 +1,518 @@
 <!DOCTYPE html>
 <html lang="eu">
-<head>
-    <meta charset="UTF-8">
-    <meta name="description" content="Ordutegia">
-    <meta name="author" content="Zunbeltz Prieto Fernández">
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@100;300;400;500;700;900&display=swap"
-        rel="stylesheet">
-    <link rel="icon" type="image/x-icon" href="Horario/icono.svg">
-    <title>3WAG1 - Klaseko ordutegia</title>
-    <style>
-        body {
-            zoom: 150%;
-            font-family: 'Ubuntu', 'Segoe UI', Roboto, 'Open Sans';
-            background-color: #242424;
-            color: #fff;
-            text-align: center;
-        }
-        a{
-            color: teal;
+    <head>
+        <meta charset="UTF-8">
+        <meta name="description" content="Ordutegia">
+        <meta name="author" content="Zprietof23">
+        <link rel="icon" type="image/x-icon" href="Horario/icono.svg">
+        <title>3WAG1 - Klaseko ordutegia</title>
+        <style>
+        @font-face {
+            font-family: 'Ubuntu';
+            src: url('Horario/fonts/Ubuntu-Regular.ttf') format('truetype');
+            font-weight: 400;
             font-style: normal;
-            text-decoration: none;
-        }
-        header {
-            margin-bottom: 20px;
-        }
-        table {
-            width: 80%;
-            margin: 0 auto;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        /* Base: Bordes blancos por defecto */
-        th, td {
-            border: 1px solid #fff;
-            padding: 8px;
-            text-align: center;
-            box-sizing: border-box; 
-        }
-        th {
-            background-color: #242424;
-        }
-        
-        /* Estilo para el resaltado: fondo blanco, texto negro y negrita */
-        td.highlight {
-            background-color: #fff;
-            color: #242424;
-            font-weight: bold;
-            /* MUGA ZURIA LEHENETSITA: Nabarmendutako gelaxkak integratzea */
-            border: 1px solid #fff; 
-        }
-        
-        th.highlight { 
-            background-color: #fff;
-            color: #242424;
-            /* BORDE SUPERIOR BLANCO, BORDE INFERIOR NEGRO */
-            border-top: 1px solid #fff; 
-            border-bottom: 1px solid #242424;
-            border-left: 1px solid #fff;
-            border-right: 1px solid #fff;
-        }
-        /* --- Estilos Condicionales para Bordes Negros (SEPARADORES) --- */
-        /* Goian, behean, eskuinean, ezkerrean beltza */
-        td.highlight.highlight-top { border-top: 1px solid #242424; }
-        td.highlight.highlight-bottom { border-bottom: 1px solid #242424; }
-        td.highlight.highlight-right { border-right: 1px solid #242424; }
-        td.highlight.highlight-left { border-left: 1px solid #242424; }
-        
-        #clock {
-            font-size: 2em;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        
-        /* Centrar la lista de asignaturas y sus elementos */
-        ul {
-            margin-top: 20px;
-            display: inline-block;
-            text-align: center; 
-            list-style: none; 
-            padding: 0;
-        }
-        
-        ul li {
-            list-style: none; 
-            text-align: center;
         }
 
-        /* --- Estilos Botón Convalidados --- */
-        .btn-convalidados {
-            background-color: #242424;
-            color: #fff;
-            border: 1px solid #fff;
-            padding: 8px 16px;
-            font-family: 'Ubuntu', 'Segoe UI', Roboto, sans-serif;
-            font-size: 0.8rem;
-            cursor: pointer;
-            margin-bottom: 15px;
-            transition: all 0.2s ease;
+        @font-face {
+            font-family: 'Ubuntu';
+            src: url('Horario/fonts/Ubuntu-Bold.ttf') format('truetype');
+            font-weight: 700;
+            font-style: normal;
         }
 
-        .btn-convalidados:hover {
-            background-color: #fff;
-            color: #242424;
+        @font-face {
+            font-family: 'Ubuntu';
+            src: url('Horario/fonts/Ubuntu-Light.ttf') format('truetype');
+            font-weight: 300;
+            font-style: normal;
         }
 
-        .btn-convalidados.active {
-            background-color: teal;
-            color: #fff;
-            border-color: teal;
+        @font-face {
+            font-family: 'Ubuntu';
+            src: url('Horario/fonts/Ubuntu-Medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
         }
 
-        /* Ocultar texto de asignaturas convalidadas conservando estructura de tabla */
-        td.convalidado-blank {
-            color: transparent !important;
-        }
-    </style>
-</head>
-<body>
-    <header>
-        <h1>3WAG1 - Klaseko ordutegia</h1>
-        <div id="clock"></div>
-        <button id="btnConvalidados" class="btn-convalidados" onclick="toggleConvalidados()">Convalidados Eder Aimar Aitor</button>
-    </header>
-    <table>
-        <thead>
-            <tr>
-                <th></th>
-                <th id="mon">Astelehena</th>
-                <th id="tue">Asteartea</th>
-                <th id="wed">Asteazkena</th>
-                <th id="thu">Osteguna</th>
-                <th id="fri">Ostirala</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td>8:00-9:00</td>
-                <td>6. DIGI</td>
-                <td rowspan="2" class="convalidado">7. EIP-1</td>
-                <td>1. LEN</td>
-                <td>3. ENT</td>
-                <td rowspan="2">4. BAD</td>
-            </tr>
-            <tr>
-                <td>9:00-10:00</td>
-                <td>3. ENT</td>
-                <td rowspan="2">2. PROG</td>
-                <td rowspan="2">2. PROG</td>
-            </tr>
-            <tr>
-                <td>10:00-11:00</td>
-                <td>2. PROG</td>
-                <td class="convalidado">5. SOSTE</td>
-                <td>2. PROG</td>
-            </tr>
-            <tr>
-                <td>11:00-11:30</td>
-                <td colspan="5">Atsedenaldia</td>
-            </tr>
-            <tr>
-                <td>11:30-12:30</td>
-                <td>2. PROG</td>
-                <td rowspan="2">4. BAD</td>
-                <td>6. DIGI</td>
-                <td>4. BAD</td>
-                <td rowspan="2">1. LEN</td>
-            </tr>
-            <tr>
-                <td>12:30-13:30</td>
-                <td>1. LEN</td>
-                <td rowspan="2">8. INGL</td>
-                <td rowspan="2" class="convalidado">7. EIP-1</td>
-            </tr>
-            <tr>
-                <td>13:30-14:30</td>
-                <td>4. BAD</td>
-                <td>2. PROG</td>
-                <td>3. ENT</td>
-            </tr>
-        </tbody>
-    </table>
-    <ul>
-        <li>1. Markatzeko lengoaiak eta informazioa kudeatzeko sistemak: <u><i>Maitane Oviedo Satrustegi</i></u></li>
-        <li>2. Programazioa: <u><i>Joseba Andoni Sanz Mayal</i></u></li>
-        <li>3. Garapen inguruneak: <u><i>Egoitz Gallaga Perez</i></u></li>
-        <li>4. Datu baseak: <u><i>Garikoitz Barquin Esnaola</i></u></li>
-        <li>5. Produktu-sistemari aplikatutako jasangarritasuna: <u><i>Sara Hawari Berriozabalgoitia</i></u></li>
-        <li>6. Produktu-sektoreei aplikatutako digitalizazioa: <u><i>Urtzi Goikoetxea Villarmarzo</i></u></li>
-        <li>7. Enplegagarritasunerako ibilbide pertsonala: <u><i>Monica Ortiz Castillo</i></u></li>
-        <li>8. Ingles profesionala: <u><i>Maria Mar Lopez Perez</i></u></li>
-    </ul>
-    <p><a href="mailto:b7orac1xd@mozmail.com" target="_blank">Sugerencias</a></p>
-    <script>
-        // RELOJ
-        function updateClock() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
-        }
-        setInterval(updateClock, 1000);
-        updateClock();
-
-        // FUNCION BOTON CONVALIDADOS
-        function toggleConvalidados() {
-            const btn = document.getElementById('btnConvalidados');
-            btn.classList.toggle('active');
-            const cells = document.querySelectorAll('.convalidado');
-            cells.forEach(cell => {
-                cell.classList.toggle('convalidado-blank');
-            });
+        @font-face {
+            font-family: 'Ubuntu';
+            src: url('Horario/fonts/Ubuntu-Italic.ttf') format('truetype');
+            font-weight: 400;
+            font-style: italic;
         }
 
-        // Función auxiliar que mapea la tabla teniendo en cuenta rowspan y colspan
-        function getCellByColumn(rowIndex, colIndex) {
-            const grid = [];
-            const trs = document.querySelectorAll('tbody tr');
+        @font-face {
+            font-family: 'Ubuntu';
+            src: url('Horario/fonts/Ubuntu-BoldItalic.ttf') format('truetype');
+            font-weight: 700;
+            font-style: italic;
+        }
+
+        @font-face {
+            font-family: 'Ubuntu';
+            src: url('Horario/fonts/Ubuntu-LightItalic.ttf') format('truetype');
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        @font-face {
+            font-family: 'Ubuntu';
+            src: url('Horario/fonts/Ubuntu-MediumItalic.ttf') format('truetype');
+            font-weight: 500;
+            font-style: italic;
+        }
+            body {
+                zoom: 150%;
+                font-family: 'Ubuntu', 'Segoe UI', Roboto, 'Open Sans';
+                background-color: #242424;
+                color: #fff;
+                text-align: center;
+            }
+            #snow {
+                position: fixed;
+                inset: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 10;
+            }
+            @media (prefers-reduced-motion: reduce) {
+                #snow {
+                    display: none;
+                }
+            }
+            a{
+                color: teal;
+                font-style: normal;
+                text-decoration: none;
+            }
+            header {
+                margin-bottom: 20px;
+            }
+            table {
+                width: 80%;
+                margin: 0 auto;
+                border-collapse: collapse;
+                margin-bottom: 20px;
+            }
+            /* Base: Bordes blancos por defecto */
+            th, td {
+                border: 1px solid #fff;
+                padding: 8px;
+                text-align: center;
+                box-sizing: border-box; 
+            }
+            th {
+                background-color: #242424;
+            }
             
-            trs.forEach((tr, rIdx) => {
-                grid[rIdx] = grid[rIdx] || [];
-                let cIdx = 0;
+            /* Estilo para el resaltado: fondo blanco, texto negro y negrita */
+            td.highlight {
+                background-color: #fff;
+                color: #242424;
+                font-weight: bold;
+                /* MUGA ZURIA LEHENETSITA: Nabarmendutako gelaxkak integratzea */
+                border: 1px solid #fff; 
+            }
+            
+            th.highlight { 
+                background-color: #fff;
+                color: #242424;
+                /* BORDE SUPERIOR BLANCO, BORDE INFERIOR NEGRO */
+                border-top: 1px solid #fff; 
+                border-bottom: 1px solid #242424;
+                border-left: 1px solid #fff;
+                border-right: 1px solid #fff;
+            }
+            /* --- Estilos Condicionales para Bordes Negros (SEPARADORES) --- */
+            /* Goian, behean, eskuinean, ezkerrean beltza */
+            td.highlight.highlight-top { border-top: 1px solid #242424; }
+            td.highlight.highlight-bottom { border-bottom: 1px solid #242424; }
+            td.highlight.highlight-right { border-right: 1px solid #242424; }
+            td.highlight.highlight-left { border-left: 1px solid #242424; }
+            
+            #clock {
+                font-size: 2em;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+            
+            /* Centrar la lista de asignaturas y sus elementos */
+            ul {
+                margin-top: 20px;
+                display: inline-block;
+                text-align: center; 
+                list-style: none; 
+                padding: 0;
+            }
+            
+            ul li {
+                list-style: none; 
+                text-align: center;
+            }
+
+            /* --- Estilos Botón Convalidados --- */
+            .btn-convalidados {
+                background-color: #242424;
+                color: #fff;
+                border: 1px solid #fff;
+                padding: 8px 16px;
+                font-family: 'Ubuntu', 'Segoe UI', Roboto, sans-serif;
+                font-size: 0.8rem;
+                cursor: pointer;
+                margin-bottom: 15px;
+                transition: all 0.2s ease;
+                border-radius: 50px;
+            }
+
+            .btn-convalidados:hover {
+                background-color: #fff;
+                color: #242424;
+            }
+
+            .btn-convalidados.active {
+                background-color: teal;
+                color: #fff;
+                border-color: teal;
+            }
+
+            /* Ocultar texto de asignaturas convalidadas conservando estructura de tabla */
+            td.convalidado-blank {
+                color: transparent !important;
+            }
+        </style>
+    </head>
+    <body>
+        <canvas id="snow" aria-hidden="true"></canvas>
+        <header>
+            <h1>3WAG1 - Klaseko ordutegia</h1>
+            <div id="clock"></div>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th id="mon">Astelehena</th>
+                    <th id="tue">Asteartea</th>
+                    <th id="wed">Asteazkena</th>
+                    <th id="thu">Osteguna</th>
+                    <th id="fri">Ostirala</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>8:00-9:00</td>
+                    <td>6. DIGI</td>
+                    <td rowspan="2" class="convalidado">7. EIP-1</td>
+                    <td>1. LEN</td>
+                    <td>3. ENT</td>
+                    <td rowspan="2">4. BAD</td>
+                </tr>
+                <tr>
+                    <td>9:00-10:00</td>
+                    <td>3. ENT</td>
+                    <td rowspan="2">2. PROG</td>
+                    <td rowspan="2">2. PROG</td>
+                </tr>
+                <tr>
+                    <td>10:00-11:00</td>
+                    <td>2. PROG</td>
+                    <td class="convalidado">5. SOSTE</td>
+                    <td>2. PROG</td>
+                </tr>
+                <tr>
+                    <td>11:00-11:30</td>
+                    <td colspan="5">Atsedenaldia</td>
+                </tr>
+                <tr>
+                    <td>11:30-12:30</td>
+                    <td>2. PROG</td>
+                    <td rowspan="2">4. BAD</td>
+                    <td>6. DIGI</td>
+                    <td>4. BAD</td>
+                    <td rowspan="2">1. LEN</td>
+                </tr>
+                <tr>
+                    <td>12:30-13:30</td>
+                    <td>1. LEN</td>
+                    <td rowspan="2">8. INGL</td>
+                    <td rowspan="2" class="convalidado">7. EIP-1</td>
+                </tr>
+                <tr>
+                    <td>13:30-14:30</td>
+                    <td>4. BAD</td>
+                    <td>2. PROG</td>
+                    <td>3. ENT</td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li><button id="btnConvalidados" class="btn-convalidados" onclick="toggleConvalidados()">Convalidados</button></li>
+            <li>1. Markatzeko lengoaiak eta informazioa kudeatzeko sistemak: <u><i>Maitane Oviedo Satrustegi</i></u></li>
+            <li>2. Programazioa: <u><i>Joseba Andoni Sanz Mayal</i></u></li>
+            <li>3. Garapen inguruneak: <u><i>Egoitz Gallaga Perez</i></u></li>
+            <li>4. Datu baseak: <u><i>Garikoitz Barquin Esnaola</i></u></li>
+            <li>5. Produktu-sistemari aplikatutako jasangarritasuna: <u><i>Sara Hawari Berriozabalgoitia</i></u></li>
+            <li>6. Produktu-sektoreei aplikatutako digitalizazioa: <u><i>Urtzi Goikoetxea Villarmarzo</i></u></li>
+            <li>7. Enplegagarritasunerako ibilbide pertsonala: <u><i>Monica Ortiz Castillo</i></u></li>
+            <li>8. Ingles profesionala: <u><i>Maria Mar Lopez Perez</i></u></li>
+        </ul>
+        <script>
+            // NIEVE
+            const snowCanvas = document.getElementById('snow');
+            const snowContext = snowCanvas.getContext('2d');
+            const snowflakes = [];
+            const snowCover = [];
+            const snowSegmentWidth = 6;
+            const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+            let lastSnowFrame = 0;
+
+            function resizeSnow() {
+                const previousSnowCover = snowCover.slice();
+                const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+                snowCanvas.width = window.innerWidth * pixelRatio;
+                snowCanvas.height = window.innerHeight * pixelRatio;
+                snowContext.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+
+                const count = Math.min(120, Math.max(30, Math.floor(
+                    window.innerWidth * window.innerHeight / 9000
+                )));
+                snowflakes.length = 0;
+                for (let i = 0; i < count; i++) {
+                    snowflakes.push(createSnowflake(true));
+                }
+                snowCover.length = Math.ceil(window.innerWidth / snowSegmentWidth);
+                for (let index = 0; index < snowCover.length; index++) {
+                    const previousIndex = Math.floor(
+                        (index + 0.5) * previousSnowCover.length / snowCover.length
+                    );
+                    snowCover[index] = previousSnowCover[previousIndex] || 0;
+                }
+            }
+
+            function createSnowflake(randomHeight = false) {
+                return {
+                    x: Math.random() * window.innerWidth,
+                    y: randomHeight ? Math.random() * window.innerHeight : -5,
+                    radius: Math.random() * 2 + 1,
+                    speed: Math.random() * 1.2 + 0.5,
+                    drift: Math.random() * 0.8 - 0.4,
+                    opacity: Math.random() * 0.6 + 0.3
+                };
+            }
+
+            function drawSnow(timestamp) {
+                snowContext.clearRect(0, 0, window.innerWidth, window.innerHeight);
+                const elapsed = lastSnowFrame ? (timestamp - lastSnowFrame) / 1000 : 0;
+                lastSnowFrame = timestamp;
+                snowCover.forEach((height, index) => {
+                    snowCover[index] = Math.max(0, height - elapsed * 0.008);
+                });
+
+                snowflakes.forEach(flake => {
+                    flake.y += flake.speed;
+                    flake.x += flake.drift;
+                    const groundIndex = Math.max(0, Math.min(
+                        snowCover.length - 1,
+                        Math.floor(flake.x / snowSegmentWidth)
+                    ));
+                    if (flake.y + flake.radius >= window.innerHeight - snowCover[groundIndex]) {
+                        [groundIndex - 1, groundIndex, groundIndex + 1].forEach((index, offset) => {
+                            if (index >= 0 && index < snowCover.length) {
+                                snowCover[index] = Math.min(
+                                    22,
+                                    snowCover[index] + (offset === 1 ? 0.9 : 0.45)
+                                );
+                            }
+                        });
+                        Object.assign(flake, createSnowflake());
+                    }
+                    if (flake.x < -flake.radius) flake.x = window.innerWidth + flake.radius;
+                    if (flake.x > window.innerWidth + flake.radius) flake.x = -flake.radius;
+
+                    snowContext.beginPath();
+                    snowContext.arc(flake.x, flake.y, flake.radius, 0, Math.PI * 2);
+                    snowContext.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+                    snowContext.fill();
+                });
+
+                snowContext.beginPath();
+                snowContext.moveTo(0, window.innerHeight - (snowCover[0] || 0));
+                snowCover.forEach((height, index) => {
+                    snowContext.lineTo(
+                        Math.min(window.innerWidth, (index + 0.5) * snowSegmentWidth),
+                        window.innerHeight - height
+                    );
+                });
+                snowContext.lineTo(window.innerWidth, window.innerHeight);
+                snowContext.lineTo(0, window.innerHeight);
+                snowContext.closePath();
+                snowContext.fillStyle = 'rgba(255, 255, 255, 0.9)';
+                snowContext.fill();
+
+                requestAnimationFrame(drawSnow);
+            }
+
+            if (!reduceMotion.matches) {
+                resizeSnow();
+                window.addEventListener('resize', resizeSnow);
+                drawSnow();
+            }
+
+            // RELOJ
+            function updateClock() {
+                const now = new Date();
+                const hours = now.getHours().toString().padStart(2, '0');
+                const minutes = now.getMinutes().toString().padStart(2, '0');
+                const seconds = now.getSeconds().toString().padStart(2, '0');
+                document.getElementById('clock').textContent = `${hours}:${minutes}:${seconds}`;
+                if (document.hidden) {
+                    // Muestra la hora si estás en otra pestaña
+                    document.title = `${hours}:${minutes}:${seconds} - 3WAG1 ordutegia`;
+                } else {
+                    // Quita la hora cuando abres / enfocas esta pestaña
+                    document.title = "3WAG1 - Klaseko ordutegia";
+    }
+            }
+            setInterval(updateClock, 1000);
+            updateClock();
+
+            // FUNCION BOTON CONVALIDADOS
+            function toggleConvalidados() {
+                const btn = document.getElementById('btnConvalidados');
+                btn.classList.toggle('active');
+                const cells = document.querySelectorAll('.convalidado');
+                cells.forEach(cell => {
+                    cell.classList.toggle('convalidado-blank');
+                });
+            }
+
+            // Función auxiliar que mapea la tabla teniendo en cuenta rowspan y colspan
+            function getCellByColumn(rowIndex, colIndex) {
+                const grid = [];
+                const trs = document.querySelectorAll('tbody tr');
                 
-                Array.from(tr.children).forEach(cell => {
-                    // Saltar posiciones ya ocupadas por un rowspan de filas anteriores
-                    while (grid[rIdx][cIdx]) cIdx++;
+                trs.forEach((tr, rIdx) => {
+                    grid[rIdx] = grid[rIdx] || [];
+                    let cIdx = 0;
                     
-                    const rowspan = parseInt(cell.getAttribute('rowspan') || 1);
-                    const colspan = parseInt(cell.getAttribute('colspan') || 1);
-                    
-                    for (let r = 0; r < rowspan; r++) {
-                        for (let c = 0; c < colspan; c++) {
-                            grid[rIdx + r] = grid[rIdx + r] || [];
-                            grid[rIdx + r][cIdx + c] = cell;
+                    Array.from(tr.children).forEach(cell => {
+                        // Saltar posiciones ya ocupadas por un rowspan de filas anteriores
+                        while (grid[rIdx][cIdx]) cIdx++;
+                        
+                        const rowspan = parseInt(cell.getAttribute('rowspan') || 1);
+                        const colspan = parseInt(cell.getAttribute('colspan') || 1);
+                        
+                        for (let r = 0; r < rowspan; r++) {
+                            for (let c = 0; c < colspan; c++) {
+                                grid[rIdx + r] = grid[rIdx + r] || [];
+                                grid[rIdx + r][cIdx + c] = cell;
+                            }
                         }
-                    }
-                    cIdx += colspan;
+                        cIdx += colspan;
+                    });
                 });
-            });
-            
-            return grid[rowIndex] ? grid[rowIndex][colIndex] : null;
-        }
-
-        // --- FUNCION PRINCIPAL DE RESALTADO ---
-        function highlightSchedule() {
-            const now = new Date();
-            const day = now.getDay(); // 0 = Domingo, 1 = Lunes, 2 = Martes, 3 = Miércoles, 4 = Jueves, 5 = Viernes...
-            const hour = now.getHours();
-            const minute = now.getMinutes();
-            const nowMin = hour * 60 + minute;
-            const rows = document.querySelectorAll('tbody tr');
-            
-            // 1. Limpiar resaltados anteriores
-            document.querySelectorAll('td, th').forEach(el => {
-                el.classList.remove('highlight', 'highlight-top', 'highlight-bottom', 'highlight-right');
-            });
-
-            // 2. Resaltar cabecera del día
-            const daysMap = {1:'mon', 2:'tue', 3:'wed', 4:'thu', 5:'fri'};
-            if(daysMap[day]) {
-                document.getElementById(daysMap[day]).classList.add('highlight');
+                
+                return grid[rowIndex] ? grid[rowIndex][colIndex] : null;
             }
 
-            // Denbora-tarte guztiak
-            const timeSlots = [
-                // [startH, startM, endH, endM, rowIndex, isBreak]
-                [8, 0, 9, 0, 0, false],
-                [9, 0, 10, 0, 1, false],
-                [10, 0, 11, 0, 2, false],
-                [11, 0, 11, 30, 3, true], // Atsedenaldia
-                [11, 30, 12, 30, 4, false],
-                [12, 30, 13, 30, 5, false],
-                [13, 30, 14, 30, 6, false]
-            ];
+            // --- FUNCION PRINCIPAL DE RESALTADO ---
+            function highlightSchedule() {
+                const now = new Date();
+                const day = now.getDay(); // 0 = Domingo, 1 = Lunes, 2 = Martes, 3 = Miércoles, 4 = Jueves, 5 = Viernes...
+                const hour = now.getHours();
+                const minute = now.getMinutes();
+                const nowMin = hour * 60 + minute;
+                const rows = document.querySelectorAll('tbody tr');
+                
+                // 1. Limpiar resaltados anteriores
+                document.querySelectorAll('td, th').forEach(el => {
+                    el.classList.remove('highlight', 'highlight-top', 'highlight-bottom', 'highlight-right');
+                });
 
-            if (day >= 1 && day <= 5) {
-                timeSlots.forEach(([startH, startM, endH, endM, rowIndex, isBreak]) => {
-                    const startMin = startH * 60 + startM;
-                    const endMin = endH * 60 + endM;
+                // 2. Resaltar cabecera del día
+                const daysMap = {1:'mon', 2:'tue', 3:'wed', 4:'thu', 5:'fri'};
+                if(daysMap[day]) {
+                    document.getElementById(daysMap[day]).classList.add('highlight');
+                }
 
-                    // Denbora tartearen barruan gauden ala ez
-                    if (nowMin >= startMin && nowMin < endMin) {
-                        const row = rows[rowIndex];
-                        if (row) {
-                            const timeCell = row.children[0]; // Celda de la hora
-                            timeCell.classList.add('highlight');
-                            timeCell.classList.add('highlight-right');
+                // Denbora-tarte guztiak
+                const timeSlots = [
+                    // [startH, startM, endH, endM, rowIndex, isBreak]
+                    [8, 0, 9, 0, 0, false],
+                    [9, 0, 10, 0, 1, false],
+                    [10, 0, 11, 0, 2, false],
+                    [11, 0, 11, 30, 3, true], // Atsedenaldia
+                    [11, 30, 12, 30, 4, false],
+                    [12, 30, 13, 30, 5, false],
+                    [13, 30, 14, 30, 6, false]
+                ];
 
-                            let classCell = null;
-                            if (isBreak) { // Atsedenaldia
-                                classCell = row.children[1]; // Colspan="5" duena
-                            } else {
-                                // Se usa la matriz simulada para encontrar la columna correcta
-                                classCell = getCellByColumn(rowIndex, day);
-                            }
-                            
-                            if (classCell) {
-                                classCell.classList.add('highlight');
-                            }
-                            
-                            /* --- MUGA BELTZA APLIKATZEKO LOGIKA (Goian eta Behean) --- */
-                            const prevRowIndex = rowIndex - 1;
-                            
-                            if (rowIndex === 0 || rowIndex === 4) { // 8:00-09:00 o 11:30-12:30
-                                timeCell.classList.add('highlight-top');
-                                if (classCell) classCell.classList.add('highlight-top');
-                            } else if (prevRowIndex >= 0 && !isBreak && !timeSlots[prevRowIndex][5]) {
-                                const prevClassCell = getCellByColumn(prevRowIndex, day);
-                                if (classCell && prevClassCell && classCell.textContent !== prevClassCell.textContent) {
+                if (day >= 1 && day <= 5) {
+                    timeSlots.forEach(([startH, startM, endH, endM, rowIndex, isBreak]) => {
+                        const startMin = startH * 60 + startM;
+                        const endMin = endH * 60 + endM;
+
+                        // Denbora tartearen barruan gauden ala ez
+                        if (nowMin >= startMin && nowMin < endMin) {
+                            const row = rows[rowIndex];
+                            if (row) {
+                                const timeCell = row.children[0]; // Celda de la hora
+                                timeCell.classList.add('highlight');
+                                timeCell.classList.add('highlight-right');
+
+                                let classCell = null;
+                                if (isBreak) { // Atsedenaldia
+                                    classCell = row.children[1]; // Colspan="5" duena
+                                } else {
+                                    // Se usa la matriz simulada para encontrar la columna correcta
+                                    classCell = getCellByColumn(rowIndex, day);
+                                }
+                                
+                                if (classCell) {
+                                    classCell.classList.add('highlight');
+                                }
+                                
+                                /* --- MUGA BELTZA APLIKATZEKO LOGIKA (Goian eta Behean) --- */
+                                const prevRowIndex = rowIndex - 1;
+                                
+                                if (rowIndex === 0 || rowIndex === 4) { // 8:00-09:00 o 11:30-12:30
                                     timeCell.classList.add('highlight-top');
-                                    classCell.classList.add('highlight-top');
+                                    if (classCell) classCell.classList.add('highlight-top');
+                                } else if (prevRowIndex >= 0 && !isBreak && !timeSlots[prevRowIndex][5]) {
+                                    const prevClassCell = getCellByColumn(prevRowIndex, day);
+                                    if (classCell && prevClassCell && classCell.textContent !== prevClassCell.textContent) {
+                                        timeCell.classList.add('highlight-top');
+                                        classCell.classList.add('highlight-top');
+                                    }
                                 }
-                            }
-                            
-                            const nextRowIndex = rowIndex + 1;
-                            
-                            if (rowIndex === 6 || rowIndex === 2) { // 13:30-14:30 o 10:00-11:00
-                                timeCell.classList.add('highlight-bottom');
-                                if (classCell) classCell.classList.add('highlight-bottom');
-                            } else if (nextRowIndex < rows.length && !isBreak && !timeSlots[nextRowIndex][5]) {
-                                const nextClassCell = getCellByColumn(nextRowIndex, day);
-                                if (classCell && nextClassCell && classCell.textContent !== nextClassCell.textContent) {
+                                
+                                const nextRowIndex = rowIndex + 1;
+                                
+                                if (rowIndex === 6 || rowIndex === 2) { // 13:30-14:30 o 10:00-11:00
                                     timeCell.classList.add('highlight-bottom');
-                                    classCell.classList.add('highlight-bottom');
+                                    if (classCell) classCell.classList.add('highlight-bottom');
+                                } else if (nextRowIndex < rows.length && !isBreak && !timeSlots[nextRowIndex][5]) {
+                                    const nextClassCell = getCellByColumn(nextRowIndex, day);
+                                    if (classCell && nextClassCell && classCell.textContent !== nextClassCell.textContent) {
+                                        timeCell.classList.add('highlight-bottom');
+                                        classCell.classList.add('highlight-bottom');
+                                    }
                                 }
-                            }
-                            
-                            if (isBreak) {
-                                timeCell.classList.add('highlight-top', 'highlight-bottom');
-                                if (classCell) classCell.classList.add('highlight-top', 'highlight-bottom', 'highlight-right');
+                                
+                                if (isBreak) {
+                                    timeCell.classList.add('highlight-top', 'highlight-bottom');
+                                    if (classCell) classCell.classList.add('highlight-top', 'highlight-bottom', 'highlight-right');
+                                }
                             }
                         }
-                    }
-                });
+                    });
+                }
             }
-        }
 
-        setInterval(highlightSchedule, 1000); // Actualizar cada segundo
-        highlightSchedule();
-    </script>
-</body>
+            setInterval(highlightSchedule, 1000); // Actualizar cada segundo
+            highlightSchedule();
+        </script>
+    </body>
 </html>
